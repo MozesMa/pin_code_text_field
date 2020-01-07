@@ -134,6 +134,7 @@ class PinCodeTextField extends StatefulWidget {
   State<StatefulWidget> createState() {
     return PinCodeTextFieldState();
   }
+
 }
 
 class PinCodeTextFieldState extends State<PinCodeTextField>
@@ -312,18 +313,20 @@ class PinCodeTextFieldState extends State<PinCodeTextField>
   Widget _touchPinBoxRow() {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () {
-        if (hasFocus) {
-          FocusScope.of(context).requestFocus(FocusNode());
-          Future.delayed(Duration(milliseconds: 100), () {
-            FocusScope.of(context).requestFocus(focusNode);
-          });
-        } else {
-          FocusScope.of(context).requestFocus(focusNode);
-        }
-      },
+      onTap: () => requestFocus(),
       child: _pinBoxRow(context),
     );
+  }
+
+  void requestFocus() {
+    if (hasFocus) {
+      FocusScope.of(context).requestFocus(FocusNode());
+      Future.delayed(Duration(milliseconds: 100), () {
+        FocusScope.of(context).requestFocus(focusNode);
+      });
+    } else {
+      FocusScope.of(context).requestFocus(focusNode);
+    }
   }
 
   Widget _fakeTextInput() {
